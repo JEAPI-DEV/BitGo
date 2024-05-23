@@ -29,8 +29,3 @@ For further information, about how to use our library, check out the our offical
 [Documentation](https://linktodocumentation)
 [English] 
 [Documentation](https://linktodocumentation)
-
-
-## Credits
-
-- JEAPI
