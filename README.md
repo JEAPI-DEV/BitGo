@@ -35,3 +35,8 @@ For further information, about how to use our library, check out the our offical
 
 - Earlier Version of the MCP23017V1 : https://github.com/MKleinSB/pxt-MCP23017V1
 - JEAPI
+- Basierend auf der tollen Grundlagenseite 
+- http://robert-fromm.info/?post=elec_i2c_calliope
+- (cc) Creative Commons Robert Fromm 2017
+- Als Makecode / pxt-Paket 04.10.2018 M.Klein v3.07
+- https://www.hackster.io/MKlein/calliope-mini-i2c-io-expander-ffda4d
