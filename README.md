@@ -1,7 +1,7 @@
 
 # BitGo V1.0
 
-This Library allows you to control our BitGo V1.0, without any problems. Also many thanks to MKleinSB for his MCP23017V1 Library. We've put the link to his repo in our credits. Going forward, the library allows you to fully control our BitGo, using simple functions, such as "get distance", "get Left/Right line sensor", "turn headlights on/off", "drive forward/backward/left/right at speed 0-255", and more.
+This Library allows you to control our BitGo V1.0, without any problems. The library allows you to fully control our BitGo, using simple functions, such as "get distance", "get Left/Right line sensor", "turn headlights on/off", "drive forward/backward/left/right at speed 0-255", and more.
 
 ## Images
 
@@ -33,10 +33,4 @@ For further information, about how to use our library, check out the our offical
 
 ## Credits
 
-- Earlier Version of the MCP23017V1 : https://github.com/MKleinSB/pxt-MCP23017V1
 - JEAPI
-- Basierend auf der tollen Grundlagenseite 
-- http://robert-fromm.info/?post=elec_i2c_calliope
-- (cc) Creative Commons Robert Fromm 2017
-- Als Makecode / pxt-Paket 04.10.2018 M.Klein v3.07
-- https://www.hackster.io/MKlein/calliope-mini-i2c-io-expander-ffda4d

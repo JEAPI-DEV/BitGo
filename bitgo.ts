@@ -1,4 +1,5 @@
-enum REG_MCP {
+
+enum REGISTER {
     //% Bitmuster um Register A zu beschreiben
     Bitmuster_A = 0x12,
     //% Bitmuster um Register B zu beschreiben
@@ -11,48 +12,6 @@ enum REG_MCP {
     PullUp_Widerstaende_A = 0x0C,
     //% Pullup Widerstände Register B
     PullUp_Widerstaende_B = 0x0D
-}
-
-enum ADDRESS {
-    //% block=0x20
-    A20 = 0x20, // Standardwert
-    //% block=0x21
-    A21 = 0x21,
-    //% block=0x22
-    A22 = 0x22,
-    //% block=0x23
-    A23 = 0x23,
-    //% block=0x24
-    A24 = 0x24,
-    //% block=0x25
-    A25 = 0x25,
-    //% block=0x26
-    A26 = 0x26,
-    //% block=0x27
-    A27 = 0x27
-}
-
-enum BITS {
-    //% block=11111111
-    Alle = 0xff,
-    //% block=00000000
-    keiner = 0x00,
-    //% block=00000001
-    Bit1 = 0x01,
-    //% block=00000010
-    Bit2 = 0x02,
-    //% block=00000100
-    Bit3 = 0x04,
-    //% block=00001000
-    Bit4 = 0x08,
-    //% block=00010000
-    Bit5 = 0x10,
-    //% block=00100000
-    Bit6 = 0x20,
-    //% block=01000000
-    Bit7 = 0x40,
-    //% block=10000000
-    Bit8 = 0x80
 }
 
 const enum Ports {
@@ -102,7 +61,7 @@ let IOBitsB = 0x00;
  * Provides access to MicroBot functionality.
  */
 //% color=140 weight=100 icon="\uf1ec" block="MicroBot"
-//% groups=['Sensoren', 'Motoren', 'Lichter']
+//% groups=['Sensoren', 'Motoren', 'Lichter', 'Beim Start', 'Ein- & Ausgang']
 namespace MicroBot {
     let distance2: number;
 
@@ -234,19 +193,19 @@ namespace MicroBot {
 
         if (portIndex <= 8) {
             // Port is in Register A
-            register = REG_MCP.EinOderAusgabe_A;
+            register = REGISTER.EinOderAusgabe_A;
             ioBits = IOBitsA;
         } else {
             // Port is in Register B
-            register = REG_MCP.EinOderAusgabe_B;
+            register = REGISTER.EinOderAusgabe_B;
             ioBits = IOBitsB;
             portIndex -= 8;
         }
 
         if (mode === Mode.Output) {
-            ioBits &= ~(BITS.Bit1 << (portIndex - 1));
+            ioBits &= ~(0x01 << (portIndex - 1));
         } else {
-            ioBits |= BITS.Bit1 << (portIndex - 1);
+            ioBits |= 0x01 << (portIndex - 1);
         }
 
         if (port <= 8) {
@@ -255,11 +214,11 @@ namespace MicroBot {
             IOBitsB = ioBits;
         }
 
-        MicroBot.writeRegister(register, ioBits);
+        MicroBot.Registerwrite(register, ioBits);
 
         if (mode === Mode.Input) {
-            let pullUpRegister = port <= 8 ? REG_MCP.PullUp_Widerstaende_A : REG_MCP.PullUp_Widerstaende_B;
-            MicroBot.writeRegister(pullUpRegister, ioBits);
+            let pullUpRegister = port <= 8 ? REGISTER.PullUp_Widerstaende_A : REGISTER.PullUp_Widerstaende_B;
+            MicroBot.Registerwrite(pullUpRegister, ioBits);
         }
     }
 
@@ -281,14 +240,14 @@ namespace MicroBot {
 
         if (portIndex <= 8) {
             // Port is in Register A
-            register = REG_MCP.Bitmuster_A;
+            register = REGISTER.Bitmuster_A;
         } else {
             // Port is in Register B
-            register = REG_MCP.Bitmuster_B;
+            register = REGISTER.Bitmuster_B;
             portIndex -= 8;
         }
 
-        return MicroBot.ReadNotAnd(register, BITS.Bit1 << (portIndex - 1));
+        return MicroBot.NotRead(register, 0x01 << (portIndex - 1));
     }
 
     /**
@@ -305,18 +264,18 @@ namespace MicroBot {
     //% group="Ein- & Ausgang"
     export function digitalWrite(port: Ports, zustand: boolean): void {
         let portIndex = port;
-        let bitMask = BITS.Bit1 << (portIndex <= 8 ? portIndex - 1 : portIndex - 9);
+        let bitMask = 0x01 << (portIndex <= 8 ? portIndex - 1 : portIndex - 9);
         let bitwert: number;
         let register: number;
 
         if (portIndex <= 8) {
             // Port is in Register A
             bitwert = BitwertA;
-            register = REG_MCP.Bitmuster_A;
+            register = REGISTER.Bitmuster_A;
         } else {
             // Port is in Register B
             bitwert = BitwertB;
-            register = REG_MCP.Bitmuster_B;
+            register = REGISTER.Bitmuster_B;
             portIndex -= 8;
         }
 
@@ -332,19 +291,21 @@ namespace MicroBot {
             BitwertB = bitwert;
         }
 
-        MicroBot.writeRegister(register, bitwert);
+        MicroBot.Registerwrite(register, bitwert);
     }
 
-    export function writeRegister(reg: REG_MCP, value: number) {
-        pins.i2cWriteNumber(0x20, reg * 256 + value, NumberFormat.UInt16BE);
+    export function Registerwrite(reg: REGISTER, data: number) {
+        const regValue = reg * 256 + data;
+        pins.i2cWriteNumber(0x20, regValue, NumberFormat.UInt16BE);
     }
-
-    export function ReadNotAnd(reg: REG_MCP, value: number): boolean {
-        return !(MicroBot.readRegister(reg) & value);
+    
+    export function NotRead(reg: REGISTER, data: number): boolean {
+        const registerValue = RegisterRead(reg);
+        return (registerValue & data) === 0;
     }
-
-    export function readRegister(reg: REG_MCP): number {
-        pins.i2cWriteNumber(0x20, reg, NumberFormat.Int8LE);
-        return pins.i2cReadNumber(0x20, NumberFormat.Int8LE);
+    
+    export function RegisterRead(reg: REGISTER): number {
+        pins.i2cWriteNumber(0x20, reg, NumberFormat.UInt8LE);
+        return pins.i2cReadNumber(0x20, NumberFormat.UInt8LE);
     }
 }
