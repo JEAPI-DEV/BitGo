@@ -1,0 +1,14 @@
+{
+    "name": "BitGo",
+    "version": "0.1",
+    "description": "Funduino BitGo",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "bitgo.ts"
+    ],
+    "testFiles": [],
+    "public": true
+}
