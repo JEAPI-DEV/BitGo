@@ -1,7 +1,7 @@
 {
     "name": "BitGo",
     "version": "0.1",
-    "description": "Funduino BitGo",
+    "description": "Funduino BitGo V1.0",
     "license": "MIT",
     "dependencies": {
         "core": "*"
