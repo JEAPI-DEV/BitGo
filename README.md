@@ -1,7 +1,7 @@
 
 # BitGo V1.0
 
-This Library allows you to control our BitGo V1.0, without any problems. Also many thanks to MKleinSB for his MCP23017V1 Library. We've put the link to his repo in our credits.going forward. The Library allows you to fully control our BitGo, using simple functions, such as "get distance", "get Left/Right line sensor", "turn headlights on/off", "drive forward/backward/left/right at speed 0-255", and more.
+This Library allows you to control our BitGo V1.0, without any problems. Also many thanks to MKleinSB for his MCP23017V1 Library. We've put the link to his repo in our credits. Going forward, the library allows you to fully control our BitGo, using simple functions, such as "get distance", "get Left/Right line sensor", "turn headlights on/off", "drive forward/backward/left/right at speed 0-255", and more.
 
 ## Images
 
