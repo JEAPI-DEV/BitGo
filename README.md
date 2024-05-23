@@ -14,7 +14,7 @@ How do I add this Library to my project.
 In order to do as such, copy the following url.
 
 ```
-https://github.com/JEAPI_DEV/BitGo/
+https://github.com/JEAPI-DEV/BitGo/
 ```
 
 and when you go to your existing microbit project, or create a new project, and go unter extensions, you will probably see a search bar in there paste the url you copied earlier. And Click on the search result. After that, it should be installed. And you will see our library, on the left side
