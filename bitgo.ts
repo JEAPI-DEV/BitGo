@@ -1,11 +1,12 @@
 /**
- * MCP23017-Interfacefunktionen
- * Basierend auf der tollen Grundlagenseite 
- * http://robert-fromm.info/?post=elec_i2c_calliope
- * (cc) Creative Commons Robert Fromm 2017
- * Als Makecode / pxt-Paket 04.10.2018 M.Klein v3.07
- * https://www.hackster.io/MKlein/calliope-mini-i2c-io-expander-ffda4d
+ *  MCP23017-Interfacefunktionen
  */
+// Basierend auf der tollen Grundlagenseite 
+// http://robert-fromm.info/?post=elec_i2c_calliope
+// (cc) Creative Commons Robert Fromm 2017
+// Als Makecode / pxt-Paket 04.10.2018 M.Klein v3.07
+// https://www.hackster.io/MKlein/calliope-mini-i2c-io-expander-ffda4d
+
 
 enum REG_MCP {
     //% Bitmuster um Register A zu beschreiben
@@ -62,77 +63,6 @@ enum BITS {
     Bit7 = 0x40,
     //% block=10000000
     Bit8 = 0x80
-}
-
-/**
- * Benutzerdefinierte Blöcke
- */
-//% weight=100 color=#0fbc11 icon="\uf2db"
-namespace MCP23017 {
-    /**
-     * Schreibt in ein Register einen bestimmten Bitwert
-     * @param addr Adresse des MCP23017 (Standard 0x20)
-     * @param reg Register
-     * @param value Bitmuster als Dezimalzahl
-     */
-    //% blockId=Schreiberegister block="Beschreibe an Adresse %addr|das Register %reg|mit dem Wert %value"
-    export function writeRegister(addr: ADDRESS, reg: REG_MCP, value: number) {
-        pins.i2cWriteNumber(addr, reg * 256 + value, NumberFormat.UInt16BE)
-    }
-
-    /**
-     * Liest aus Register einen bestimmten Bitwert,
-     * verknüpft ihn mit einem Bitmuster und gibt 
-     * "Wahr" zurück wenn die Bits gesetzt sind.
-     * @param addr Adresse des MCP23017 (Standard 0x20)
-     * @param reg Register
-     * @param value Bitmuster als Dezimalzahl
-     * @return wahr oder falsch
-     */
-    //% blockId=LiesRegisterNAND block="Lies von Adresse %addr|das Register %reg|und verknüpfe es mit Bitwert %value"
-    export function ReadNotAnd(addr: ADDRESS, reg: REG_MCP, value: number): boolean {
-        return (!(MCP23017.readRegister(addr, reg) & value))
-    }
-
-    /**
-     * Bitwert für alle Ein- bzw. Ausgänge zum Auswählen
-     * @param alle Bitwert
-     * @return Bitwert
-     */
-    //% blockId=alle block="%alle"
-    //% bitwert.fieldEditor="gridpicker"
-    //% bitwert.fieldOptions.width=220
-    //% bitwert.fieldOptions.columns=3
-    export function bitwert(alle: BITS): number {
-        return alle
-    }
-
-    /**
-     * Liest ein Register aus
-     * @param addr Adresse des MCP23017 (Standard 0x20)
-     * @param reg Register
-     * @return Wert des Registers
-     */
-    //% blockId=LiesRegister block="Lies von Adresse %addr|das Register %reg|aus"
-    export function readRegister(addr: ADDRESS, reg: REG_MCP): number {
-        pins.i2cWriteNumber(addr, reg, NumberFormat.Int8LE);
-        return pins.i2cReadNumber(addr, NumberFormat.Int8LE)
-    }
-}
-
-// Enums for GPIO Expander
-const enum REG_MCP {
-    Bitmuster_A = 0x12,
-    Bitmuster_B = 0x13,
-    EinOderAusgabe_A = 0x00,
-    EinOderAusgabe_B = 0x01,
-    PullUp_Widerstaende_A = 0x0C,
-    PullUp_Widerstaende_B = 0x0D
-}
-
-const enum BITS {
-    Alle = 0xFF,
-    Bit1 = 0x01
 }
 
 const enum Ports {
