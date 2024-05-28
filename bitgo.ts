@@ -58,11 +58,11 @@ let IOBitsA = 0x00;
 let IOBitsB = 0x00;
 
 /**
- * Provides access to MicroBot functionality.
+ * Provides access to BitGo functionality.
  */
-//% color=140 weight=100 icon="\uf1ec" block="MicroBot"
+//% color=140 weight=100 icon="\uf1ec" block="BitGo"
 //% groups=['Sensoren', 'Motoren', 'Lichter', 'Beim Start', 'Ein- & Ausgang']
-namespace MicroBot {
+namespace BitGo {
     let distance2: number;
 
     /**
@@ -214,11 +214,11 @@ namespace MicroBot {
             IOBitsB = ioBits;
         }
 
-        MicroBot.Registerwrite(register, ioBits);
+        BitGo.Registerwrite(register, ioBits);
 
         if (mode === Mode.Input) {
             let pullUpRegister = port <= 8 ? REGISTER.PullUp_Widerstaende_A : REGISTER.PullUp_Widerstaende_B;
-            MicroBot.Registerwrite(pullUpRegister, ioBits);
+            BitGo.Registerwrite(pullUpRegister, ioBits);
         }
     }
 
@@ -230,7 +230,7 @@ namespace MicroBot {
     //% blockId="digitalRead"
     //% block="Input %port High"
     //% block.loc.de="Eingang %port Hoch"
-    //% jsdoc.loc.de="Gibt 'wahr' zurück wenn der Eingang mit GND verbunden wurde, der Port des MicroBot muss als Eingang festgelegt sein."
+    //% jsdoc.loc.de="Gibt 'wahr' zurück wenn der Eingang mit GND verbunden wurde, der Port des BitGo muss als Eingang festgelegt sein."
     //% port.fieldEditor="gridpicker" port.fieldOptions.columns=4
     //% weight=87
     //% group="Ein- & Ausgang"
@@ -247,7 +247,7 @@ namespace MicroBot {
             portIndex -= 8;
         }
 
-        return MicroBot.NotRead(register, 0x01 << (portIndex - 1));
+        return BitGo.NotRead(register, 0x01 << (portIndex - 1));
     }
 
     /**
@@ -291,7 +291,7 @@ namespace MicroBot {
             BitwertB = bitwert;
         }
 
-        MicroBot.Registerwrite(register, bitwert);
+        BitGo.Registerwrite(register, bitwert);
     }
 
     export function Registerwrite(reg: REGISTER, data: number) {
