@@ -194,18 +194,6 @@ namespace BitGo {
     pins.analogWritePin(AnalogPin.P12, 0)
   }
 
-  /**
-   * Set the mode of a port
-   * @param port Port
-   * @param mode Mode
-   */
-  //% blockId="pinMode"
-  //% block="set %port as %mode"
-  //% block.loc.de="setze %port als %mode"
-  //% port.fieldEditor="gridpicker" port.fieldOptions.columns=4
-  //% mode.fieldEditor="gridpicker" mode.fieldOptions.columns=2
-  //% weight=80
-  //% group="Beim Start"
   export function pinMode (port: Ports, mode: Mode): void {
     if (portModes[port] === mode) {
       // Already set to the correct mode
