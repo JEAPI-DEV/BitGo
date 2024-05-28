@@ -128,7 +128,7 @@ namespace BitGo {
      * @param on whether to turn on or off the headlights
      */
     //% block="turn headlights %on=toggleOnOff"
-    //% block.loc.de="Scheinwerfer %on=toggleOnOff einschalten"
+    //% block.loc.de="Scheinwerfer %on=toggleOnOff schalten"
     //% group="Lichter"
     //% weight=60
     export function controlHeadlights(on: boolean): void {
