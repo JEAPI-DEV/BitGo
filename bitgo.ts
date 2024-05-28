@@ -94,12 +94,12 @@ namespace BitGo {
     //% group="Sensoren"
     //% weight=90
     export function getDistance(): number {
-        pins.setPull(DigitalPin.P15, PinPullMode.PullNone);
-        pins.digitalWritePin(DigitalPin.P15, 0);
+        pins.setPull(DigitalPin.P13, PinPullMode.PullNone);
+        pins.digitalWritePin(DigitalPin.P13, 0);
         control.waitMicros(2);
-        pins.digitalWritePin(DigitalPin.P15, 1);
+        pins.digitalWritePin(DigitalPin.P13, 1);
         control.waitMicros(10);
-        pins.digitalWritePin(DigitalPin.P15, 0);
+        pins.digitalWritePin(DigitalPin.P13, 0);
 
         // read pulse
         const d = pins.pulseIn(DigitalPin.P1, PulseValue.High, 500 * 58);
@@ -117,9 +117,9 @@ namespace BitGo {
     //% weight=80
     export function getLineSensors(sensor: LineSensor): boolean {
         if (sensor == LineSensor.Left) {
-            return digitalRead(Ports.B0);
+            return !digitalRead(Ports.B0);
         } else {
-            return digitalRead(Ports.B1);
+            return !digitalRead(Ports.B1);
         }
     }
 
