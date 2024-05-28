@@ -57,6 +57,9 @@ let BitwertB = 0x00;
 let IOBitsA = 0x00;
 let IOBitsB = 0x00;
 
+// Track the mode of each port
+let portModes: { [port: number]: Mode } = {};
+
 /**
  * Provides access to BitGo functionality.
  */
@@ -129,6 +132,7 @@ namespace BitGo {
     //% group="Lichter"
     //% weight=60
     export function controlHeadlights(on: boolean): void {
+        ensurePinMode(Ports.A0, Mode.Output);
         digitalWrite(Ports.A0, on);
     }
 
@@ -187,6 +191,11 @@ namespace BitGo {
     //% weight=80
     //% group="Beim Start"
     export function pinMode(port: Ports, mode: Mode): void {
+        if (portModes[port] === mode) {
+            // Already set to the correct mode
+            return;
+        }
+
         let portIndex = port;
         let register: number;
         let ioBits: number;
@@ -220,6 +229,8 @@ namespace BitGo {
             let pullUpRegister = port <= 8 ? REGISTER.PullUp_Widerstaende_A : REGISTER.PullUp_Widerstaende_B;
             BitGo.Registerwrite(pullUpRegister, ioBits);
         }
+
+        portModes[port] = mode; // Track the mode
     }
 
     /**
@@ -235,6 +246,8 @@ namespace BitGo {
     //% weight=87
     //% group="Ein- & Ausgang"
     export function digitalRead(port: Ports): boolean {
+        ensurePinMode(port, Mode.Input);
+
         let portIndex = port;
         let register: number;
 
@@ -263,6 +276,8 @@ namespace BitGo {
     //% weight=88
     //% group="Ein- & Ausgang"
     export function digitalWrite(port: Ports, zustand: boolean): void {
+        ensurePinMode(port, Mode.Output);
+
         let portIndex = port;
         let bitMask = 0x01 << (portIndex <= 8 ? portIndex - 1 : portIndex - 9);
         let bitwert: number;
@@ -292,6 +307,12 @@ namespace BitGo {
         }
 
         BitGo.Registerwrite(register, bitwert);
+    }
+
+    function ensurePinMode(port: Ports, mode: Mode): void {
+        if (portModes[port] !== mode) {
+            pinMode(port, mode);
+        }
     }
 
     export function Registerwrite(reg: REGISTER, data: number) {
