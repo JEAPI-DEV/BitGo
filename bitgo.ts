@@ -102,7 +102,7 @@ namespace BitGo {
         pins.digitalWritePin(DigitalPin.P13, 0);
 
         // read pulse
-        const d = pins.pulseIn(DigitalPin.P1, PulseValue.High, 500 * 58);
+        const d = pins.pulseIn(DigitalPin.P1, PulseValue.High);
 
         distance2 = Math.idiv(d, 58);
         return distance2;
