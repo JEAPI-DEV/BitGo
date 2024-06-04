@@ -8,4 +8,3 @@ deploy:
 
 test:
 	pxt test
-

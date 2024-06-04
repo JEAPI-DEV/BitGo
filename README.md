@@ -3,6 +3,11 @@
 
 This Library allows you to control our BitGo V1.0, without any problems. The library allows you to fully control our BitGo, using simple functions, such as "get distance", "get Left/Right line sensor", "turn headlights on/off", "drive forward/backward/left/right at speed 0-255", and more.
 
+## Images
+
+![App Screenshot](https://raw.githubusercontent.com/JEAPI-DEV/GNA/main/images/Schematic.png)
+
+
 ## Installation
 
 How do I add this Library to my project.
